@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Algoritma Analizi dersi için vize odaklı ders notları ve interaktif laboratuvar">
   <title>Algoritma Analizi Lab</title>
-  <link rel="stylesheet" href="style.css?v=20261118a">
-  <link rel="stylesheet" href="algo.css?v=20261118a">
+  <link rel="stylesheet" href="style.css?v=20261118b">
+  <link rel="stylesheet" href="algo.css?v=20261118b">
 </head>
 <body>
   <div class="app">
@@ -52,7 +52,8 @@
         </a>
         <a class="nav-item" href="#/learn/ch3" data-route="learn">
           <span class="nav-num">H3</span>
-          <span class="nav-text"><span class="nav-title">Etkinlik ve Analiz</span><span class="nav-sub">Temel işlem, T(N), döngü, özyineleme</span></span>
+          <span class="nav-text"><span class="nav-title">Etkinlik ve Analiz</span><span class="nav-sub">Temel işlem, T(N), döngü örnekleri</span></span>
+          <span class="badge badge-out" title="Özyinelemeli analiz ve Hanoi dersleri vize dışı">Kısmen</span>
         </a>
         <a class="nav-item" href="#/learn/ch4" data-route="learn">
           <span class="nav-num">H4</span>
@@ -64,11 +65,16 @@
         </a>
         <a class="nav-item" href="#/learn/ch6" data-route="learn">
           <span class="nav-num">H6</span>
-          <span class="nav-text"><span class="nav-title">Sıralama Algoritmaları</span><span class="nav-sub">Insertion, Selection, Bubble, Merge, Quick</span></span>
+          <span class="nav-text"><span class="nav-title">Kaba Kuvvet</span><span class="nav-sub">Sıralama, arama, TSP, DFS, BFS</span></span>
         </a>
         <a class="nav-item" href="#/learn/ch7" data-route="learn">
           <span class="nav-num">H7</span>
-          <span class="nav-text"><span class="nav-title">Kaba Kuvvet ve Gezgin Satıcı</span><span class="nav-sub">Etraflı arama, TSP</span></span>
+          <span class="nav-text"><span class="nav-title">Azalt ve Fethet</span><span class="nav-sub">Insertion, topolojik, ikili arama</span></span>
+        </a>
+        <a class="nav-item" href="#/learn/ch8" data-route="learn">
+          <span class="nav-num">B8</span>
+          <span class="nav-text"><span class="nav-title">Böl ve Fethet</span><span class="nav-sub">Master, Merge, Quick</span></span>
+          <span class="badge badge-out" title="Böl Fethet PDF'i vize kapsamında değil">Vize dışı</span>
         </a>
         <a class="nav-item" href="#/learn/sorular" data-route="learn">
           <span class="nav-num">?</span>
@@ -140,28 +146,30 @@
     <div class="info-pane" id="info-exam" role="tabpanel" hidden></div>
   </aside>
 
-  <script src="js/data/info-content.js?v=20261118a" defer></script>
-  <script src="js/data/lessons-ch1.js?v=20261118a" defer></script>
-  <script src="js/data/lessons-ch2.js?v=20261118a" defer></script>
-  <script src="js/data/lessons-ch3.js?v=20261118a" defer></script>
-  <script src="js/data/lessons-ch4.js?v=20261118a" defer></script>
-  <script src="js/data/lessons-ch5.js?v=20261118a" defer></script>
-  <script src="js/data/lessons-ch6.js?v=20261118a" defer></script>
-  <script src="js/data/lessons-ch7.js?v=20261118a" defer></script>
-  <script src="js/data/teacher-questions.js?v=20261118a" defer></script>
-  <script src="js/data/chapter-outlines.js?v=20261118a" defer></script>
-  <script src="js/data/exam-scope.js?v=20261118a" defer></script>
-  <script src="js/data/review-pages.js?v=20261118a" defer></script>
-  <script src="js/data/mind-links.js?v=20261118a" defer></script>
-  <script src="js/algos.js?v=20261118a" defer></script>
-  <script src="js/views/diagrams.js?v=20261118a" defer></script>
-  <script src="js/views/diagrams-algo.js?v=20261118a" defer></script>
-  <script src="js/views/learn-view.js?v=20261118a" defer></script>
-  <script src="js/views/review-view.js?v=20261118a" defer></script>
-  <script src="js/views/mindmap-view.js?v=20261118a" defer></script>
-  <script src="js/views/sorting-view.js?v=20261118a" defer></script>
-  <script src="js/views/growth-view.js?v=20261118a" defer></script>
-  <script src="js/views/tsp-view.js?v=20261118a" defer></script>
-  <script src="js/app.js?v=20261118a" defer></script>
+  <script src="js/data/info-content.js?v=20261118b" defer></script>
+  <script src="js/data/lessons-ch1.js?v=20261118b" defer></script>
+  <script src="js/data/lessons-ch2.js?v=20261118b" defer></script>
+  <script src="js/data/lessons-ch3.js?v=20261118b" defer></script>
+  <script src="js/data/lessons-ch4.js?v=20261118b" defer></script>
+  <script src="js/data/lessons-ch5.js?v=20261118b" defer></script>
+  <script src="js/data/lessons-ch6.js?v=20261118b" defer></script>
+  <script src="js/data/lessons-ch7.js?v=20261118b" defer></script>
+  <script src="js/data/lessons-ch8.js?v=20261118b" defer></script>
+  <script src="js/data/teacher-questions.js?v=20261118b" defer></script>
+  <script src="js/data/chapter-outlines.js?v=20261118b" defer></script>
+  <script src="js/data/exam-scope.js?v=20261118b" defer></script>
+  <script src="js/data/review-pages.js?v=20261118b" defer></script>
+  <script src="js/data/mind-links.js?v=20261118b" defer></script>
+  <script src="js/algos.js?v=20261118b" defer></script>
+  <script src="js/views/diagrams.js?v=20261118b" defer></script>
+  <script src="js/views/diagrams-algo.js?v=20261118b" defer></script>
+  <script src="js/views/diagrams-algo2.js?v=20261118b" defer></script>
+  <script src="js/views/learn-view.js?v=20261118b" defer></script>
+  <script src="js/views/review-view.js?v=20261118b" defer></script>
+  <script src="js/views/mindmap-view.js?v=20261118b" defer></script>
+  <script src="js/views/sorting-view.js?v=20261118b" defer></script>
+  <script src="js/views/growth-view.js?v=20261118b" defer></script>
+  <script src="js/views/tsp-view.js?v=20261118b" defer></script>
+  <script src="js/app.js?v=20261118b" defer></script>
 </body>
 </html>

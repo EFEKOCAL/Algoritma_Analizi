@@ -218,8 +218,8 @@
       ['3', 'Algoritma etkinliği ve analiz yöntemleri', 'ch3', 'growth'],
       ['4', 'Durum değerlendirmeleri', 'ch4', null],
       ['5', 'Algoritma asimptotik yaklaşımlar', 'ch5', 'growth'],
-      ['6', 'Algoritmalar ve veri yapıları', 'ch6', 'sorting'],
-      ['7', 'Algoritmalar ve veri yapıları', 'ch7', 'tsp'],
+      ['6', 'Algoritmalar ve veri yapıları: kaba kuvvet', 'ch6', 'tsp'],
+      ['7', 'Algoritmalar ve veri yapıları: azalt ve fethet', 'ch7', 'sorting'],
       ['8', 'Ara Sınav Haftası', null, null]
     ];
 
@@ -253,7 +253,7 @@
       <div class="card"><div class="table-wrap"><table class="l-plan"><thead><tr><th>Hafta</th><th>Konu</th><th>Bu sitede</th></tr></thead><tbody>
         ${plan.map(([w, t, ch, lab]) => `<tr><td class="num">${w}</td><td>${t}</td><td>${ch ? `<a class="pill ok" href="#/learn/${ch}">Ders notu ✓</a>` : ''}${lab ? `<a class="pill lab" href="#/${lab}">Laboratuvar</a>` : ''}${!ch && !lab ? '<span class="muted">Sınav</span>' : ''}</td></tr>`).join('')}
       </tbody></table></div>
-      <p class="hint">6–7. haftaların "Algoritmalar ve veri yapıları" konusu, lab uygulamasında istenenlerle sınırlı tutuldu: beş sıralama algoritması (Insertion, Selection, Bubble, Merge, Quick) ve kaba kuvvetle gezgin satıcı.</p></div>`;
+      <p class="hint">Vize kapsamı: <b>H1-H2</b>, <b>Algoritma Performansı</b>, <b>Kaba Kuvvet</b> ve <b>Azalt ve Fethet</b> PDF'leri. Özyinelemeli Analiz (Bölüm 3'ün son iki dersi) ve Böl-Fethet (Bölüm 8) "vize dışı" etiketlidir.</p></div>`;
   }
 
   function pageChapter(ch) {

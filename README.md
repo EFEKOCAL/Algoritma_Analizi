@@ -4,18 +4,22 @@ Algoritma Analizi ve Tasarımı dersinin vize konularını **önce teori, sonra 
 
 **Canlı site:** https://efekocal.github.io/Algoritma_Analizi/
 
-## Kapsam (vize: 1–7. hafta)
+## Kapsam (vize)
 
-| Hafta | Konu | Sitedeki bölüm | Kaynak |
-|---|---|---|---|
-| 1 | Algoritma ve ilgili temel kavramlar | H1 · EBOB (Euclid, ardışık tamsayı, asal çarpanlar), Eratosthenes, tasarım ve analiz süreci | algoritma_analizi_H1_H2 s. 1–20 |
-| 2 | Önemli problem türleri, problem anlama | H2 · Sıralama (kararlılık, yerinde), arama, string, graf, kombinasyonel, geometrik, nümerik, en yakın çift | H1_H2 s. 21–34 |
-| 3 | Algoritma etkinliği ve analiz yöntemleri | H3 · Analiz çerçevesi, temel işlem, T(n) ≈ c_op·C(n), T(N) sayma, döngü örnekleri, özyinelemeli / özyinelemesiz analiz, Hanoi | H1_H2, Algoritma Performansı, Özyinelemeli Analiz |
-| 4 | Durum değerlendirmeleri | H4 · En iyi / en kötü / ortalama durum, sıralı aramanın C_avg türetmesi | H1_H2 s. 43–48 |
-| 5 | Asimptotik yaklaşımlar | H5 · O, Ω, Θ tanımları ve ispatları, sadeleştirme, verimlilik sınıfları, limit yöntemi (L'Hôpital, Stirling) | H1_H2 s. 60–82 |
-| 6–7 | Algoritmalar ve veri yapıları | H6 · Lab 1'deki beş sıralama (Insertion, Selection, Bubble, Merge, Quick) ve Master teoremi · H7 · Kaba kuvvet / etraflı arama, gezgin satıcı (Lab 2) | Kaba Kuvvet, Azalt-Fethet, Böl-Fethet, Lab Uygulaması |
+Vize: **algoritma_analizi_H1_H2**, **Algoritma Performansı**, **Kaba Kuvvet Algoritmaları** ve **Azalt ve Fethet Algoritmaları** PDF'leri.
 
-6–7. haftaların "Algoritmalar ve veri yapıları" başlığı, lab uygulamasında istenenlerle sınırlı tutuldu.
+| Bölüm | Konu | Kaynak |
+|---|---|---|
+| H1 | Algoritma, EBOB (Euclid, ardışık tamsayı, asal çarpanlar), Eratosthenes, tasarım ve analiz süreci | H1_H2 s. 1–20 |
+| H2 | Problem türleri: sıralama (kararlılık, yerinde), arama, string, graf, kombinasyonel, geometrik, nümerik | H1_H2 s. 21–34 |
+| H3 | Analiz çerçevesi, temel işlem, T(N) sayma, döngü örnekleri, özyinelemesiz analiz | H1_H2, Algoritma Performansı |
+| H4 | En iyi / en kötü / ortalama durum, sıralı aramanın C_avg türetmesi | H1_H2 s. 43–48 |
+| H5 | O, Ω, Θ, sadeleştirme, verimlilik sınıfları, limit yöntemi | H1_H2 s. 60–82, Performans |
+| H6 | Kaba kuvvet: selection, bubble, gözcülü arama, string eşleme, en yakın çift, konveks gövde, etraflı arama (TSP, sırt çantası, işe alma), DFS, BFS, lab (postane, Lab 2) | Kaba Kuvvet (tamamı) |
+| H7 | Azalt-fethet: üç tip, aⁿ, insertion, topolojik sıralama, Johnson–Trotter, alt küme, ikili arama, lab (sahte para, Rus köylüsü) | Azalt ve Fethet (tamamı) |
+| B8 | Böl-fethet: Master teoremi, merge, quick, Lab 1 karşılaştırması — **vize dışı** | Böl Fethet |
+
+H3'teki "Özyinelemeli Algoritmaların Analizi" ve "Hanoi Kuleleri" dersleri de **vize dışı** etiketlidir (Özyinelemeli Analiz PDF'i). Kapsam `js/data/exam-scope.js` dosyasından değiştirilebilir.
 
 ## Ders notları
 
@@ -57,6 +61,6 @@ js/algos.js               sıralama algoritmaları: adım izleri ve hızlı sür
 js/data/lessons-ch*.js    haftalık ders notları
 js/data/*.js              hoca soruları, bölüm girişleri, tekrar planı, zihin haritası
 js/views/learn-view.js    ders kartları, tekrar, hoca soruları
-js/views/diagrams*.js     etkileşimli şekiller
+js/views/diagrams*.js     etkileşimli şekiller (diagrams-algo2.js: kaba kuvvet ve azalt-fethet)
 js/views/sorting-view.js  L1 · growth-view.js L2 · tsp-view.js L3
 ```

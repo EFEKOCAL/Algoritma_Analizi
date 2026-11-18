@@ -65,26 +65,40 @@
       concepts: ['Big Oh O', 'Big Omega Ω', 'Big Theta Θ', 'c ve n₀', 'üst / alt / sıkı sınır', 'O(max{g₁, g₂})', 'sabit, log, doğrusal, n log n, kare, küp, üstel, faktöriyel', 'limit yöntemi', 'L\'Hôpital', 'Stirling']
     },
     ch6: {
-      slide: 'Kaba Kuvvet · Azalt-Fethet · Böl-Fethet · Lab 1',
+      slide: 'Kaba Kuvvet 1–40 · Lab 2',
       topics: [
-        ['Seçmeli sıralama (kaba kuvvet)', ['selection']],
-        ['Kabarcık sıralama (kaba kuvvet)', ['bubble']],
-        ['Eklemeli sıralama (azalt-fethet)', ['insertion']],
+        ['Kaba kuvvet, seçimli sıralama', ['selection']],
+        ['Kabarcık sıralama, Mystery/Secret/Enigma', ['bubble', 'arama-string']],
+        ['Sıralı arama, kaba kuvvet string eşleme', ['arama-string']],
+        ['En yakın çift, konveks gövde', ['geometri']],
+        ['Etraflı arama: gezgin satıcı, sırt çantası, işe alma', ['etrafli']],
+        ['DFS: önce derinlik arama', ['dfs']],
+        ['BFS: önce genişlik arama, DFS ile karşılaştırma', ['bfs']],
+        ['Lab: postane, 6 şehirde satış turu', ['postane', 'lab2']]
+      ],
+      concepts: ['kaba kuvvet', 'n(n−1)/2', 'gözcü (sentinel)', 'string eşleme O(nm)', 'Öklid mesafesi', 'konveks gövde', 'etraflı arama', 'Hamilton devresi', '(n−1)!/2', '2ⁿ alt küme', 'n! atama', 'DFS / yığıt', 'BFS / kuyruk', 'ağaç, geri, çapraz kenar', 'Θ(|V|²), Θ(|V|+|E|)']
+    },
+    ch7: {
+      slide: 'Azalt ve Fethet 1–25',
+      topics: [
+        ['Azalt-fethet ve üç tipi, aⁿ, Öklid', ['azalt']],
+        ['Eklemeli sıralama', ['insertion']],
+        ['Topolojik sıralama: DFS ve kaynak silme', ['topolojik']],
+        ['Permütasyon (Johnson–Trotter) ve alt küme üretme', ['permutasyon']],
+        ['İkili arama', ['ikili-arama']],
+        ['Lab: sahte para, Rus köylüsü çarpımı', ['lab-af']]
+      ],
+      concepts: ['bir sabitle azalt', 'sabit oranla azalt', 'değişken boyutla azalt', 'eklemeli sıralama', 'yönlü graf (digraph)', 'DAG', 'kaynak silme', 'hareketli eleman', 'bit dizisi', 'ikili arama', '⌊log₂n⌋ + 1', 'sahte para', 'Rus köylüsü']
+    },
+    ch8: {
+      slide: 'Böl Fethet 1–28 · Lab 1',
+      topics: [
         ['Böl-fethet ve Master teoremi', ['bol-fethet']],
         ['Birleştirmeli sıralama', ['merge']],
         ['Çabuk sıralama', ['quick']],
-        ['Karşılaştırma ve Lab 1', ['karsilastirma']]
+        ['Beş algoritmanın karşılaştırması, Lab 1', ['karsilastirma']]
       ],
-      concepts: ['kaba kuvvet', 'azalt-fethet', 'böl-fethet', 'T(n) = aT(n/b) + f(n)', 'Master teoremi', 'pivot (mihenk)', 'Hoare bölümlemesi', 'birleştirme (merge)', 'kararlılık', 'yerinde', 'n(n−1)/2', 'n log₂n']
-    },
-    ch7: {
-      slide: 'Kaba Kuvvet 20–21 · Lab 2',
-      topics: [
-        ['Etraflı arama', ['etrafli']],
-        ['Gezgin satıcı problemi, tur sayısı', ['etrafli']],
-        ['Lab 2: 6 şehirde 4 şehirlik tur', ['lab2']]
-      ],
-      concepts: ['etraflı arama', 'gezgin satıcı (TSP)', 'Hamilton devresi', '(n−1)!/2', 'permütasyon', 'Θ(n!)']
+      concepts: ['T(n) = aT(n/b) + f(n)', 'Master teoremi', 'merge', 'pivot', 'Hoare bölümlemesi', 'n log₂n']
     }
   };
 })(window.OSLab = window.OSLab || {});

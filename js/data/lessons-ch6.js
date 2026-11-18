@@ -1,6 +1,5 @@
 /*
- * lessons-ch6.js — 6. hafta: Algoritmalar ve veri yapıları → Lab 1'deki beş sıralama algoritması.
- * Kaynaklar: Kaba Kuvvet (s. 2–9), Azalt ve Fethet (s. 6–8), Böl Fethet (s. 2–18), Lab Uygulaması 1.
+ * lessons-ch6.js — Vize: Kaba Kuvvet Algoritmaları (Kaba Kuvvet Algoritmaları.pdf, tamamı) ve Lab 2.
  */
 (function (OSLab) {
   'use strict';
@@ -11,16 +10,17 @@
   OSLab.lessons.chapters.push({
     id: 'ch6',
     num: 6,
-    title: 'Sıralama Algoritmaları',
-    en: 'Sorting algorithms (Lab 1)',
-    source: 'Kaba Kuvvet, Azalt-Fethet, Böl-Fethet PDF\'leri · Lab 1',
+    title: 'Kaba Kuvvet Algoritmaları',
+    en: 'Brute force',
+    source: 'Kaba Kuvvet Algoritmaları.pdf · Lab 2',
     objectives: [
-      'Selection, Bubble, Insertion, Merge ve Quick sort\'u bir dizi üzerinde elle izlemek',
-      'Her birinin sözde kodunu yazmak ve temel işlemini belirlemek',
-      'Karşılaştırma sayısını toplam formülü veya özyinelemeyle çıkarmak',
-      'En iyi, en kötü ve ortalama durumları ve bunlara yol açan girdileri söylemek',
-      'Master teoremini uygulamak',
-      'Beş algoritmayı karmaşıklık, kararlılık ve yerinde olma açısından karşılaştırmak'
+      'Kaba kuvvet yaklaşımını tanımlamak ve örneklerini saymak',
+      'Seçmeli ve kabarcık sıralamayı elle izlemek, karşılaştırma sayılarını toplam formülüyle çıkarmak',
+      'Gözcülü sıralı aramayı ve kaba kuvvet string eşlemeyi analiz etmek',
+      'En yakın çift ve konveks gövde problemlerini kaba kuvvetle çözmek',
+      'Etraflı aramayı TSP, sırt çantası ve işe alma problemlerine uygulamak',
+      'DFS ve BFS ile bir grafı elle gezmek, yığıt/kuyruk sıralarını ve kenar türlerini yazmak',
+      'Lab problemleri (postane, 6 şehirde satış turu) için kaba kuvvet çözümü tasarlamak'
     ],
     lessons: [
       {
@@ -82,178 +82,256 @@
         ]
       },
       {
-        id: 'insertion',
-        title: 'Eklemeli Sıralama (Insertion Sort)',
-        en: 'Decrease and conquer: insertion sort',
-        src: 'Azalt ve Fethet s. 6–8',
-        minutes: 9,
-        lab: LAB('insertion'),
+        id: 'arama-string',
+        title: 'Sıralı Arama ve String Eşleme',
+        en: 'Sequential search, brute-force string matching',
+        src: 'Kaba Kuvvet s. 10–15',
+        minutes: 11,
         blocks: [
-          { t: 'h', text: 'Azalt-fethet fikri' },
-          { t: 'p', html: 'Problemi <b>bir küçük</b> örneğine çevir, onu çöz, çözümü genişlet: A[0..n−2] sıralıysa, A[n−1]\'i sıralı kısımda <b>doğru yerine eklemek</b> yeterlidir. Eklemeli sıralama "bir sabitle (1) azalt" türünün örneğidir.' },
-          { t: 'h', text: 'Algoritma' },
-          { t: 'p', html: 'İlk iterasyon dizinin ikinci elemanını alır; birinciden küçükse yer değiştirir. İkinci iterasyon üçüncü elemanı önceki ikisine göre uygun yere yerleştirir. <b>i. iterasyondan sonra ilk i+1 eleman kendi aralarında sıralıdır</b> (ama henüz son yerlerinde olmayabilirler; seçmeli sıralamadan farkı budur).' },
-          { t: 'codex', title: 'InsertionSort(A[0..n−1])', rows: [
-            ['for i ← 1 to n − 1 do', 'for döngüsü n − 1 kez çalışır'],
-            ['    v ← A[i]\n    j ← i − 1', 'Eklenecek eleman v'],
-            ['    while j ≥ 0 and A[j] > v do', '<b>Temel işlem: A[j] &gt; v</b>'],
-            ['        A[j + 1] ← A[j]\n        j ← j − 1', 'v\'den büyükler bir sağa kayar'],
-            ['    A[j + 1] ← v', 'v boşalan yere yazılır']
+          { t: 'h', text: 'Alıştırma: bu algoritmalar ne yapıyor?' },
+          { t: 'p', html: 'Slayt 10\'daki üç algoritma kaba kuvvet analizi pratiği içindir. Her biri için: ne hesaplar, temel işlemi ne, kaç kez yapılır, verimlilik sınıfı ne, daha iyisi var mı?' },
+          { t: 'solve', title: 'Mystery(n)', q: '<code>S ← 0; for i ← 1 to n do S ← S + i * i; return S</code>', a: 'a) <b>1² + 2² + … + n²</b> toplamını hesaplar. b) Temel işlem: <b>çarpma</b> (i·i). c) <b>n</b> kez. d) <b>Θ(n)</b>. e) Kapalı formül <b>n(n+1)(2n+1)/6</b> ile sabit sayıda işlemde: <b>Θ(1)</b>.' },
+          { t: 'solve', title: 'Secret(A[0..n−1])', q: '<code>minval ← A[0]; maxval ← A[0]; for i ← 1 to n−1: if A[i] &lt; minval then minval ← A[i]; if A[i] &gt; maxval then maxval ← A[i]; return maxval − minval</code>', a: 'a) Dizinin <b>açıklığını</b> (en büyük − en küçük) hesaplar. b) Temel işlem: <b>karşılaştırma</b>. c) Her turda 2 → <b>2(n − 1)</b>. d) <b>Θ(n)</b>. e) Elemanları ikişer ikişer alıp önce kendi aralarında, sonra küçüğü min ile büyüğü max ile karşılaştırarak ≈ <b>3n/2</b> karşılaştırmaya inilir; sınıf yine Θ(n) (her elemana en az bir kez bakmak gerekir).' },
+          { t: 'solve', title: 'Enigma(A[0..n−1, 0..n−1])', q: '<code>for i ← 0 to n−2 do for j ← i+1 to n−1 do if A[i,j] ≠ A[j,i] return false; return true</code>', a: 'a) Matrisin <b>simetrik</b> olup olmadığını denetler. b) Temel işlem: <b>A[i,j] ≠ A[j,i] karşılaştırması</b>. c) En kötü durumda (matris simetrikse) Σᵢ₌₀ⁿ⁻² (n−1−i) = <b>n(n−1)/2</b>. d) <b>Θ(n²)</b>. e) Köşegenin üstündeki her elemana bakmak zorunlu olduğundan daha iyisi yok.' },
+          { t: 'h', text: 'Sıralı arama (gözcülü)' },
+          { t: 'p', html: 'Aranan eleman dizi elemanlarıyla <b>tek tek</b> karşılaştırılır; varsa <b>ilk</b> bulunduğu indis döner. Slayt 12\'deki sürüm bir hile kullanır: aranan değer dizinin <b>sonuna eklenir</b> (gözcü, sentinel). Böylece döngüde "dizi bitti mi?" kontrolüne gerek kalmaz.' },
+          { t: 'codex', title: 'SequentialSearch2(A[0..n], K)', rows: [
+            ['A[n] ← K', '<b>Gözcü</b>: K mutlaka bulunacak, döngü kesin durur'],
+            ['i ← 0\nwhile A[i] ≠ K do\n    i ← i + 1', 'Yalnızca <b>A[i] ≠ K</b> karşılaştırması: i &lt; n kontrolü yok'],
+            ['if i < n return i\nelse return −1', 'Gözcüde durduysa K dizide yoktur']
           ] },
-          { t: 'dg', id: 'sort-insertion' },
-          { t: 'h', text: 'Analiz: üç durum farklı' },
-          { t: 'table', head: ['Durum', 'Girdi', 'Karşılaştırma'], rows: [
-            ['En kötü', '<b>Ters sıralı</b> dizi: her eleman en başa kadar kayar', 'C_worst(n) = Σᵢ₌₁ⁿ⁻¹ Σⱼ₌₀ⁱ⁻¹ 1 = Σᵢ₌₁ⁿ⁻¹ i = (n−1)n/2 ∈ Θ(n²)'],
-            ['En iyi', '<b>Sıralı</b> dizi: her turda tek karşılaştırma', 'C_best(n) = Σᵢ₌₁ⁿ⁻¹ 1 = n − 1 ∈ Θ(n)'],
-            ['Ortalama', 'Dağınık (rastgele) dizi', 'C_avg(n) ≈ n²/4 ∈ Θ(n²)']
+          { t: 'p', html: 'Verimlilik değişmez (en kötü n + 1, Θ(n)); kazanç, her turdaki <b>ikinci karşılaştırmanın</b> ortadan kalkmasıdır.' },
+          { t: 'h', text: 'Kaba kuvvet string eşleme' },
+          { t: 'p', html: 'n uzunluğundaki <b>T</b> metninde m uzunluğundaki <b>P</b> örüntüsü aranır. Örüntü metnin başına hizalanır; karakterler soldan sağa karşılaştırılır. Uyumsuzluk çıkınca örüntü <b>bir karakter sağa kaydırılır</b>. Son deneme konumu n − m\'dir.' },
+          { t: 'codex', title: 'BruteForceStringMatch(T[0..n−1], P[0..m−1])', rows: [
+            ['for i ← 0 to n − m do', 'n − m + 1 hizalama'],
+            ['    j ← 0\n    while j < m and P[j] = T[i + j] do\n        j ← j + 1', '<b>Temel işlem: P[j] = T[i+j]</b> karşılaştırması'],
+            ['    if j = m return i', 'Tüm karakterler eşleşti'],
+            ['return −1', '']
           ] },
-          { t: 'note', kind: 'exam', html: 'Eklemeli sıralama <b>neredeyse sıralı</b> dizilerde çok hızlıdır (en iyi durum n − 1). Ortalamada bubble ve selection\'ın yaklaşık yarısı kadar karşılaştırma yapar (n²/4). Yerinde ve kararlıdır.' }
+          { t: 'dg', id: 'string-match' },
+          { t: 'table', head: ['Durum', 'Ne olur?', 'Karşılaştırma'], rows: [
+            ['En kötü', 'Her hizalamada uyumsuzluk <b>son karakterde</b> çıkar ya da örüntü hiç bulunmaz', 'm(n − m + 1) → <b>O(nm)</b>'],
+            ['Ortalama (doğal dil)', 'Uyumsuzluk genellikle ilk birkaç karakterde yakalanır', '≈ <b>Θ(n)</b>']
+          ] },
+          { t: 'solve', title: 'Slayt 15', q: '1000 adet 0\'dan oluşan metinde <b>00001</b>, <b>10000</b> ve <b>01000</b> örüntüleri için kaç karşılaştırma yapılır?', a: 'Her örüntüde m = 5, hizalama sayısı n − m + 1 = 996 ve hiçbiri bulunmaz.<br><b>00001</b>: her hizalamada ilk 4 karakter eşleşir, 5.\'de uyumsuzluk → 5 karşılaştırma × 996 = <b>4980</b> (en kötü durum).<br><b>10000</b>: ilk karakterde uyumsuzluk → 1 × 996 = <b>996</b>.<br><b>01000</b>: ilk karakter eşleşir, ikincide uyumsuzluk → 2 × 996 = <b>1992</b>.' }
         ],
         checks: [
-          { q: '89, 45, 68, 90, 29, 34 dizisini eklemeli sıralamayla sıralayın.', a: 'i=1: 45 89 | 68 90 29 34. i=2: 45 68 89 | 90 29 34. i=3: 45 68 89 90 | 29 34. i=4: 29 45 68 89 90 | 34. i=5: 29 34 45 68 89 90.' },
-          { q: 'Eklemeli sıralamanın en iyi ve en kötü durumları hangi girdilerde oluşur?', a: 'En iyi: dizi zaten sıralı → n−1 karşılaştırma, Θ(n). En kötü: dizi ters sıralı → n(n−1)/2, Θ(n²).' },
-          { q: 'Eklemeli sıralama hangi tasarım tekniğine aittir?', a: 'Azalt-fethet (bir sabitle, 1 azaltarak).' }
+          { q: 'Gözcülü sıralı aramada gözcünün işlevi nedir?', a: 'Aranan K dizinin sonuna eklenir; döngü mutlaka durur ve her turda "i < n" kontrolü yapılmaz. Sınıf değişmez (Θ(n)), karşılaştırma sayısı azalır.' },
+          { q: 'Kaba kuvvet string eşlemede en kötü durum karşılaştırma sayısı nedir?', a: 'm(n − m + 1) → O(nm): her hizalamada uyumsuzluk son karakterde çıkar.' },
+          { q: 'Secret algoritması ne hesaplar, kaç karşılaştırma yapar?', a: 'Dizinin en büyük ile en küçük elemanının farkını (açıklık) hesaplar; 2(n−1) karşılaştırma, Θ(n).' }
         ]
       },
       {
-        id: 'bol-fethet',
-        title: 'Böl-Fethet ve Master Teoremi',
-        en: 'Divide and conquer, Master theorem',
-        src: 'Böl Fethet s. 2–6',
+        id: 'geometri',
+        title: 'En Yakın Çift ve Konveks Gövde',
+        en: 'Closest pair and convex hull by brute force',
+        src: 'Kaba Kuvvet s. 16–19',
         minutes: 9,
         blocks: [
-          { t: 'h', text: 'Böl-fethet' },
-          { t: 'list', ordered: true, items: [
-            'Problem <b>alt problemlere bölünür</b> (genellikle eşit büyüklükte).',
-            'Alt problemler (genellikle özyinelemeli) <b>çözülür</b>.',
-            'Gerekirse alt problem çözümleri <b>birleştirilir</b>.'
+          { t: 'h', text: 'En yakın çift (kaba kuvvet)' },
+          { t: 'p', html: 'n nokta içinde birbirine en yakın iki noktayı bulmak. Kaba kuvvet çözümü <b>her nokta çiftinin</b> Öklid mesafesini hesaplar ve en küçüğünü tutar.' },
+          { t: 'codex', title: 'BruteForceClosestPair(P)', rows: [
+            ['d ← ∞', ''],
+            ['for i ← 1 to n − 1 do\n  for j ← i + 1 to n do', 'Her çift bir kez: n(n−1)/2 çift'],
+            ['    d ← min(d, sqrt((xᵢ−xⱼ)² + (yᵢ−yⱼ)²))', 'Karekök yerine kareler karşılaştırılabilir'],
+            ['return d', '']
           ] },
-          { t: 'p', html: 'En sık kullanılan tasarım tekniklerinden biridir. Her alt problem kendi işlemcisinde çözülebildiği için <b>paralel</b> hesaplamaya uygundur.' },
-          { t: 'h', text: 'Genel özyineleme' },
-          { t: 'p', html: 'n büyüklüğündeki örnek, her biri <b>n/b</b> büyüklüğünde <b>b</b> örneğe bölünür ve bunların <b>a</b> tanesinin çözülmesi gerekir (a ≥ 1, b &gt; 1). n\'nin b\'nin kuvveti olduğu varsayılırsa:' },
-          { t: 'code', text: 'T(n) = a·T(n/b) + f(n)\n\nf(n): bölme ve çözümleri birleştirme için harcanan zaman' },
-          { t: 'h', text: 'Master teoremi' },
-          { t: 'def', term: 'Master teoremi', html: 'T(n) = aT(n/b) + f(n) ve <b>f(n) ∈ Θ(nᵈ)</b>, d ≥ 0 ise:<br>• a &lt; bᵈ → T(n) ∈ <b>Θ(nᵈ)</b><br>• a = bᵈ → T(n) ∈ <b>Θ(nᵈ log n)</b><br>• a &gt; bᵈ → T(n) ∈ <b>Θ(n^(log_b a))</b>' },
-          { t: 'dg', id: 'master' },
-          { t: 'h', text: 'Örnekler' },
-          { t: 'table', head: ['Özyineleme', 'a, b, d', 'Karşılaştırma', 'Sonuç'], rows: [
-            ['n sayının toplamı: A(n) = 2A(n/2) + 1', '2, 2, 0', '2 &gt; 2⁰ = 1', 'Θ(n^(log₂2)) = <b>Θ(n)</b>'],
-            ['T(n) = 4T(n/2) + n', '4, 2, 1', '4 &gt; 2¹', '<b>Θ(n²)</b>'],
-            ['T(n) = 4T(n/2) + n²', '4, 2, 2', '4 = 2²', '<b>Θ(n² log n)</b>'],
-            ['T(n) = 4T(n/2) + n³', '4, 2, 3', '4 &lt; 2³', '<b>Θ(n³)</b>'],
-            ['Merge sort: C(n) = 2C(n/2) + n − 1', '2, 2, 1', '2 = 2¹', '<b>Θ(n log n)</b>']
+          { t: 'note', kind: 'exam', html: '<b>Temel işlem karekök değil, kare almadır.</b> Karekök karmaşık bir işlemdir; karesi büyük olan sayının karekökü de büyük olduğundan, mesafelerin <b>kareleri</b> karşılaştırılır.' },
+          { t: 'code', text: 'C(n) = Σᵢ₌₁ⁿ⁻¹ Σⱼ₌ᵢ₊₁ⁿ 2 = 2 Σᵢ₌₁ⁿ⁻¹ (n − i)\n     = 2[(n−1) + (n−2) + … + 1] = (n − 1)n ∈ Θ(n²)' },
+          { t: 'p', html: 'Her çift için <b>2 kare alma</b> (Δx² ve Δy²) yapıldığı için toplam n(n−1). 2. haftadaki A–F örneğinde 15 çift incelenmiş, en yakın çift B–E bulunmuştu.' },
+          { t: 'h', text: 'Konveks (dışbükey) gövde' },
+          { t: 'def', term: 'Konveks gövde', en: 'Convex hull', html: 'Bir nokta kümesindeki <b>tüm noktaları içine alan en küçük konveks çokgen</b>. Konveks küme: içindeki herhangi iki noktayı birleştiren doğru parçası tamamen kümenin içinde kalır. Gövdenin köşeleri kümenin "uç noktalarıdır".' },
+          { t: 'list', items: [
+            'Küme <b>2 noktadan</b> oluşuyorsa: iki nokta arasındaki doğru parçası',
+            'Küme <b>3 noktadan</b> oluşuyorsa: köşeleri bu noktalar olan üçgen; aynı doğru üzerindeyseler en uzak iki nokta arasındaki doğru parçası',
+            'Genel durum: aşağıdaki kaba kuvvet fikri'
+          ] },
+          { t: 'dg', id: 'convex' },
+          { t: 'note', kind: 'extra', html: '<b>Kaba kuvvet fikri (ödev için):</b> pᵢ ve pⱼ noktalarından geçen doğru <code>ax + by = c</code> (a = yⱼ − yᵢ, b = xᵢ − xⱼ, c = xᵢyⱼ − yᵢxⱼ). Diğer tüm noktalar için <code>ax + by − c</code> işaretine bak: hepsi <b>aynı taraftaysa</b> (hepsi ≥ 0 ya da hepsi ≤ 0) pᵢpⱼ gövdenin bir kenarıdır. n(n−1)/2 çift × (n − 2) nokta → <b>O(n³)</b>.' }
+        ],
+        checks: [
+          { q: 'Kaba kuvvet en yakın çift algoritmasının karşılaştırma/temel işlem sayısı nedir?', a: 'C(n) = Σ Σ 2 = (n−1)n ∈ Θ(n²).' },
+          { q: 'Konveks gövdeyi kaba kuvvetle bulurken bir doğru parçasının gövde kenarı olduğu nasıl anlaşılır? Karmaşıklık?', a: 'Diğer tüm noktalar o doğrunun aynı tarafında kalıyorsa (ax + by − c işaretleri aynı) kenardır. Her çift için n−2 nokta denetlenir: O(n³).' }
+        ]
+      },
+      {
+        id: 'etrafli',
+        title: 'Etraflı Arama: TSP, Sırt Çantası, İşe Alma',
+        en: 'Exhaustive search',
+        src: 'Kaba Kuvvet s. 20–24',
+        minutes: 13,
+        lab: { preset: { module: 'tsp', graph: 'slide' } },
+        blocks: [
+          { t: 'h', text: 'Etraflı arama' },
+          { t: 'def', term: 'Etraflı arama', en: 'Exhaustive search', html: 'Kombinasyonel çözümler içinden belirli bir özelliğe sahip olanı (en kısa, en değerli, en ucuz) bulmak için kullanılan <b>kaba kuvvet</b> çözümü: <b>her ihtimal denenir</b>.' },
+          { t: 'list', ordered: true, items: [
+            'Tüm olası çözümleri sistematik olarak üret (permütasyon, alt küme…).',
+            'Kısıtları sağlamayanları ele.',
+            'Her birinin maliyetini hesapla, <b>en iyisini</b> sakla.'
+          ] },
+          { t: 'h', text: 'Gezgin satıcı problemi' },
+          { t: 'def', term: 'Gezgin satıcı (TSP)', en: 'Traveling salesman', html: 'Aralarındaki mesafeler bilinen şehirleri <b>her birinden bir kez geçerek</b> dolaşıp <b>başladığı şehre en kısa yoldan dönen</b> turu bulmak. Graf diliyle: ağırlıklı grafta en kısa <b>Hamilton devresi</b>.' },
+          { t: 'dg', id: 'tsp-slide' },
+          { t: 'p', html: 'Başlangıç sabitlenince (n − 1)! sıralama, her tur iki yönde aynı olduğundan <b>(n − 1)!/2</b> farklı tur → <b>Θ(n!)</b>. n = 20 için ≈ 6·10¹⁶ tur.' },
+          { t: 'h', text: 'Sırt çantası problemi' },
+          { t: 'def', term: 'Sırt çantası', en: 'Knapsack', html: 'Ağırlıkları w₁…wₙ ve değerleri v₁…vₙ olan n nesne ile kapasitesi W olan çanta: <b>çantaya sığan</b> (toplam ağırlık ≤ W) ve <b>değeri en yüksek</b> nesne alt kümesini bulmak. Hikâye: hırsız neyi çalacağına karar veriyor.' },
+          { t: 'dg', id: 'knapsack' },
+          { t: 'p', html: 'n nesnenin <b>2ⁿ</b> alt kümesi vardır; her birinin ağırlığı ve değeri hesaplanır → <b>Ω(2ⁿ)</b>.' },
+          { t: 'h', text: 'İşe alma (atama) problemi' },
+          { t: 'def', term: 'İşe alma', en: 'Assignment problem', html: 'n aday n pozisyona başvuruyor; her aday her pozisyon için farklı maaş istiyor (C[i, j]). <b>Her pozisyona 1 kişi</b>, <b>her aday işe alınacak</b>, <b>toplam maaş en az</b> olacak.' },
+          { t: 'dg', id: 'assignment' },
+          { t: 'p', html: 'Her atama bir <b>permütasyondur</b> ⟨j₁, …, jₙ⟩ (i. kişi jᵢ. işe). n! permütasyon denenir → <b>Θ(n!)</b>.' },
+          { t: 'note', kind: 'exam', html: 'Üç problem, üç sayma: TSP <b>(n−1)!/2</b> tur, sırt çantası <b>2ⁿ</b> alt küme, işe alma <b>n!</b> permütasyon. Etraflı arama yalnızca çok küçük n için uygulanabilir.' }
+        ],
+        checks: [
+          { q: 'Sırt çantası örneğinde (W = 10; w = 7, 3, 4, 5; v = 42, 12, 40, 25) en iyi seçim nedir?', a: '{3, 4} nesneleri: ağırlık 4 + 5 = 9 ≤ 10, değer 40 + 25 = $65. 16 alt kümenin hepsi denenir.' },
+          { q: 'Etraflı aramada TSP, sırt çantası ve işe alma için incelenen çözüm sayıları nedir?', a: 'TSP: (n−1)!/2 tur; sırt çantası: 2ⁿ alt küme; işe alma: n! permütasyon.' },
+          { q: 'Slayttaki işe alma matrisinde en ucuz atama nedir?', a: '⟨2, 1, 3, 4⟩: 1. kişi 2. işe (2), 2. kişi 1. işe (6), 3. kişi 3. işe (1), 4. kişi 4. işe (4) → toplam 13.' }
+        ]
+      },
+      {
+        id: 'dfs',
+        title: 'Önce Derinlik Arama (DFS)',
+        en: 'Depth-first search',
+        src: 'Kaba Kuvvet s. 26–32',
+        minutes: 11,
+        blocks: [
+          { t: 'h', text: 'Graf gezme' },
+          { t: 'p', html: 'Bir grafın <b>tüm düğümlerini ve kenarlarını sistematik olarak</b> gezen iki önemli algoritma: <b>DFS</b> (Depth First Search, önce derinlik) ve <b>BFS</b> (Breadth First Search, önce genişlik). Yapay zekâ ve yöneylem araştırması algoritmalarında kullanılırlar; bağlantılılık ve çevrim gibi temel graf özelliklerini incelemede çok etkilidirler.' },
+          { t: 'h', text: 'DFS nasıl çalışır?' },
+          { t: 'list', items: [
+            'İstenen bir düğümden başlar, onu <b>"ziyaret edildi"</b> olarak işaretler.',
+            'Her adımda bulunduğu düğümün <b>ziyaret edilmemiş bir komşusuna</b> geçer. Birden fazla komşu varsa belirlenen kurala göre (alfabetik, en yakın…).',
+            'Tüm komşuları ziyaret edilmiş bir düğüme gelince (<b>dead end</b>, çıkmaz) bir önceki düğüme <b>geri döner</b> ve oradan devam etmeyi dener.',
+            'Başlangıç düğümüne dönünce durur. Ziyaret edilmemiş düğüm kaldıysa oradan <b>yeniden başlatılır</b>.'
+          ] },
+          { t: 'def', term: 'Yığıt (stack)', html: 'DFS\'yi izlemek için uygundur: düğüme <b>ilk kez</b> erişildiğinde yığıta <b>itilir (push)</b>; düğüm <b>çıkmaz</b> olduğunda yığıttan <b>çekilir (pop)</b>.' },
+          { t: 'dg', id: 'dfs' },
+          { t: 'h', text: 'DFS ormanı ve kenar türleri' },
+          { t: 'compare', cols: [
+            { title: 'Ağaç kenarı (tree edge)', items: ['Ziyaret edilmemiş bir düğüme erişirken kullanılan kenar', 'Erişilen düğüm, erişildiği düğümün <b>çocuğu</b> olur', 'Bu kenarlar <b>DFS ormanını</b> oluşturur'] },
+            { title: 'Geri kenar (back edge)', items: ['DFS ormanında bir düğümden ebeveyni dışındaki bir <b>atasına</b> giden kenar', 'Slaytta kesikli çizgi', 'Varsa graf <b>çevrimseldir</b>'] }
+          ] },
+          { t: 'h', text: 'Etkinlik ve kullanım' },
+          { t: 'table', head: ['Gösterim', 'DFS etkinliği'], rows: [
+            ['Bitişiklik matrisi', 'Θ(|V|²)'],
+            ['Bitişiklik listesi', 'Θ(|V| + |E|)']
+          ] },
+          { t: 'list', items: [
+            'DFS\'de <b>iki düğüm sıralaması</b> vardır: ilk erişim sırası (push) ve çıkmaz olma sırası (pop).',
+            'Algoritma durduğunda <b>tüm düğümler ziyaret edildiyse</b> graf <b>bağlantılıdır</b>.',
+            'Bir <b>geri kenar</b> bulunduysa graf <b>çevrimseldir</b>.',
+            'Ayrım noktalarını bulmada da kullanılır.'
+          ] },
+          { t: 'note', kind: 'info', html: 'Sözde kodun yalınlığı DFS\'nin basit olduğunu göstermez: gücü, bitişiklik matrisi ya da listesi üzerindeki hareketlerinde anlaşılır ve etkinliği bu veri yapısına bağlıdır.' }
+        ],
+        checks: [
+          { q: 'Slayttaki grafta alfabetik DFS\'de düğümlerin yığıta itilme ve çekilme sıraları nedir?', a: 'İtilme: a1 c2 d3 f4 b5 e6 g7 h8 i9 j10. Çekilme: d1 e2 b3 f4 c5 a6 j7 i8 h9 g10.' },
+          { q: 'DFS hangi veri yapısıyla izlenir? Etkinliği nedir?', a: 'Yığıt (stack). Bitişiklik matrisiyle Θ(|V|²), bitişiklik listesiyle Θ(|V| + |E|).' },
+          { q: 'DFS ormanında geri kenar bulunması ne anlama gelir?', a: 'Grafta çevrim vardır (graf çevrimseldir).' }
+        ]
+      },
+      {
+        id: 'bfs',
+        title: 'Önce Genişlik Arama (BFS)',
+        en: 'Breadth-first search',
+        src: 'Kaba Kuvvet s. 33–40',
+        minutes: 10,
+        blocks: [
+          { t: 'h', text: 'BFS nasıl çalışır?' },
+          { t: 'p', html: 'DFS <b>"cesurca"</b> ilerler (başlangıçtan olabildiğince uzağa gitmeye çalışır); BFS <b>dikkatli</b> ilerler. Önce başlangıç düğümüne <b>bitişik tüm düğümleri</b>, sonra <b>iki kenar uzaklıktakileri</b>, ve bağlı tüm düğümler bitene kadar katman katman gezer.' },
+          { t: 'def', term: 'Kuyruk (queue)', html: 'BFS\'yi izlemek için uygundur: başlangıç düğümü eklenerek kuyruk başlatılır; her ziyaret edilmemiş komşu <b>"ziyaret edildi"</b> diye işaretlenip kuyruğa eklenir; <b>ilk eklenen ilk çıkar</b> (FIFO).' },
+          { t: 'dg', id: 'bfs' },
+          { t: 'h', text: 'BFS ormanı' },
+          { t: 'compare', cols: [
+            { title: 'Ağaç kenarı', items: ['Ziyaret edilmemiş komşuya erişilen kenar', 'BFS ormanını oluşturur'] },
+            { title: 'Çapraz kenar (cross edge)', items: ['Ağaçta olmayan, zaten ziyaret edilmiş bir düğüme giden kenar', 'Slaytta kesikli çizgi'] }
+          ] },
+          { t: 'h', text: 'Etkinlik ve DFS\'den farkları' },
+          { t: 'list', items: [
+            'Etkinliği DFS gibidir: bitişiklik matrisi <b>Θ(|V|²)</b>, bitişiklik listesi <b>Θ(|V| + |E|)</b>.',
+            'Kuyruğun FIFO özelliği nedeniyle <b>tek tip</b> düğüm sıralaması verir (ekleme sırası = çıkarma sırası).',
+            'Bağlantılılık ve çevrimselliği denetlemede kullanılır.',
+            '<b>DFS ile yapılamayan:</b> verilen iki düğüm arasındaki <b>en az kenarlı yolu</b> bulur.'
+          ] },
+          { t: 'note', kind: 'warn', html: 'Slayt 38 "BFS\'de bir <b>geri</b> ayrıt bulunduysa graf çevrimseldir" diyor; BFS ormanında geri kenar değil <b>çapraz kenar</b> oluşur. Doğrusu: BFS\'de bir <b>çapraz kenar</b> bulunduysa graf çevrimseldir.' },
+          { t: 'table', head: ['', 'DFS', 'BFS'], rows: [
+            ['Veri yapısı', 'Yığıt (stack)', 'Kuyruk (queue)'],
+            ['Düğüm sıralaması', 'İki farklı sıralama', 'Tek sıralama'],
+            ['Kenar türleri', 'Ağaç ve geri kenar', 'Ağaç ve çapraz kenar'],
+            ['Uygulama', 'Bağlantılılık, çevrimsellik, ayrım noktaları', 'Bağlantılılık, çevrimsellik, en az kenarlı yol'],
+            ['Bitişiklik matrisi', 'Θ(|V|²)', 'Θ(|V|²)'],
+            ['Bitişiklik listesi', 'Θ(|V| + |E|)', 'Θ(|V| + |E|)']
           ] }
         ],
         checks: [
-          { q: 'Master teoreminin üç durumunu yazın.', a: 'T(n) = aT(n/b) + f(n), f(n) ∈ Θ(nᵈ): a < bᵈ → Θ(nᵈ); a = bᵈ → Θ(nᵈ log n); a > bᵈ → Θ(n^(log_b a)).' },
-          { q: 'T(n) = 4T(n/2) + n² için T(n) nedir?', a: 'a = 4, b = 2, d = 2; a = bᵈ = 4 → Θ(n² log n).' },
-          { q: 'T(n) = 2T(n/2) + 1 (n sayının toplamı) çözümü?', a: 'a = 2, b = 2, d = 0; 2 > 2⁰ → Θ(n^(log₂2)) = Θ(n).' }
+          { q: 'Slayttaki grafta alfabetik BFS\'de kuyruğa eklenme sırası nedir?', a: 'a1 c2 d3 e4 f5 b6 g7 h8 j9 i10.' },
+          { q: 'BFS\'nin DFS ile yapılamayan uygulaması nedir?', a: 'İki düğüm arasındaki en az kenardan oluşan yolu bulmak.' },
+          { q: 'DFS ve BFS\'yi veri yapısı, sıralama sayısı ve kenar türleri açısından karşılaştırın.', a: 'DFS: yığıt, iki sıralama (push/pop), ağaç ve geri kenar. BFS: kuyruk, tek sıralama, ağaç ve çapraz kenar.' }
         ]
       },
       {
-        id: 'merge',
-        title: 'Birleştirmeli Sıralama (Merge Sort)',
-        en: 'Divide and conquer: mergesort',
-        src: 'Böl Fethet s. 7–10',
+        id: 'postane',
+        title: 'Lab: Postane Problemi',
+        en: 'Lab: post office location',
+        src: 'Kaba Kuvvet s. 25',
+        minutes: 7,
+        blocks: [
+          { t: 'h', text: 'Problem' },
+          { t: 'list', ordered: true, items: [
+            'Düz bir yol üzerinde n köy var, konumları x₁ &lt; x₂ &lt; … &lt; xₙ. Bu köylerden birine postane kurulacak. <b>Tüm köyler için optimum uzaklıkta</b> postanenin hangi köye kurulacağını bulan kaba kuvvet algoritmasını yazın.',
+            'Postanenin <b>belirtilen bir köye en uzak</b> olacak şekilde kurulmasını sağlayan algoritmayı yazın.'
+          ] },
+          { t: 'dg', id: 'postane' },
+          { t: 'h', text: 'Kaba kuvvet çözümü' },
+          { t: 'codex', title: 'Postane(x[1..n])', rows: [
+            ['best ← ∞', ''],
+            ['for i ← 1 to n do', 'Her köy aday'],
+            ['    cost ← 0\n    for j ← 1 to n do\n        cost ← cost + |xᵢ − xⱼ|', 'Temel işlem: |xᵢ − xⱼ| hesaplaması'],
+            ['    if cost < best\n        best ← cost; k ← i', ''],
+            ['return k', 'n² işlem → <b>Θ(n²)</b>']
+          ] },
+          { t: 'note', kind: 'info', html: '"Optimum uzaklık" iki türlü yorumlanabilir: <b>toplam uzaklığı</b> en aza indirmek (yukarıdaki kod; sonuç ortanca köydür) ya da <b>en uzak köyün uzaklığını</b> en aza indirmek (cost yerine max alınır; sonuç orta noktaya en yakın köydür). Raporda hangisini seçtiğini belirt. Şekil ikisini de hesaplar.' },
+          { t: 'p', html: '<b>2. kısım:</b> belirtilen köy xₖ ise her köyün |xᵢ − xₖ| uzaklığı hesaplanır, en büyüğü seçilir: n işlem, <b>Θ(n)</b>. Köyler sıralı olduğundan cevap her zaman <b>x₁ ya da xₙ</b>\'dir.' }
+        ],
+        checks: [
+          { q: 'Postane problemi (toplam uzaklık) için kaba kuvvet algoritmasının karmaşıklığı nedir?', a: 'Her aday köy için n uzaklık toplanır: n·n → Θ(n²).' },
+          { q: 'Postaneyi belirtilen bir köye en uzak kurmak için hangi köyler aday olabilir?', a: 'Yalnızca uç köyler x₁ ve xₙ; kaba kuvvetle tüm köylere bakmak Θ(n).' }
+        ]
+      },
+      {
+        id: 'lab2',
+        title: 'Lab 2: 6 Şehirde Satış Turu',
+        en: 'Lab 2: brute-force tour',
+        src: 'Lab Uygulaması 2',
         minutes: 10,
-        lab: LAB('merge'),
+        lab: { preset: { module: 'tsp', mode: 'path', k: 4 } },
         blocks: [
-          { t: 'h', text: 'Algoritma' },
-          { t: 'p', html: 'Diziyi <b>eşit uzunlukta iki diziye böler</b> (eleman sayısı tekse biri bir fazla olur), her yarıyı özyinelemeli sıralar ve <b>sıralı iki yarıyı tek dizide birleştirir</b>. Temel durum: tek elemanlı dizi zaten sıralıdır, fonksiyon hemen döner. Verimlidir ama daha karmaşıktır.' },
-          { t: 'codex', title: 'Mergesort(A[0..n−1])', rows: [
-            ['if n > 1', 'Temel durum: n = 1'],
-            ['    copy A[0..⌊n/2⌋−1] to B[0..⌊n/2⌋−1]\n    copy A[⌊n/2⌋..n−1] to C[0..⌈n/2⌉−1]', '<b>Böl</b> (konuma göre)'],
-            ['    Mergesort(B)\n    Mergesort(C)', '<b>Fethet</b>'],
-            ['    Merge(B, C, A)', '<b>Birleştir</b>']
+          { t: 'h', text: 'Problem' },
+          { t: 'p', html: 'Bir satıcı aşağıdaki 6 şehirden birinden yola çıkarak <b>4 şehirlik</b> bir satış turu yapacak. <b>Gittiği şehre bir daha gitmeyecek, geçtiği yoldan bir daha geçmeyecek.</b> Hangi şehirden çıkıp hangi şehirleri dolaşarak <b>minimum yol</b> kat edeceğini bulan kaba kuvvet çözümü yazılacak.' },
+          { t: 'dg', id: 'lab2-graph' },
+          { t: 'note', kind: 'info', html: 'Graf <b>tam değil</b>: her şehir çifti arasında yol yok (ör. A–C, A–D). Kaba kuvvet çözümü, ardışık iki şehri arasında kenar olmayan sıralamaları <b>geçersiz</b> sayıp eler.' },
+          { t: 'h', text: 'Kaba kuvvet tasarımı' },
+          { t: 'codex', title: 'EnKisaTur(şehirler, k = 4)', rows: [
+            ['best ← ∞', ''],
+            ['for her başlangıç s (6 seçenek)', 'Başlangıç şehri de denenir'],
+            ['  for s\'den başlayan, tekrar etmeyen\n      her k şehirlik sıralama', '6·5·4·3 = <b>360</b> sıralı seçim'],
+            ['    if ardışık her çift arasında yol var\n      L ← yolların toplamı\n      if L < best  best ← L; enİyi ← sıralama', 'Temel işlem: bir sıralamanın uzunluğunu hesaplamak'],
+            ['return enİyi, best', '']
           ] },
-          { t: 'codex', title: 'Merge(B[0..p−1], C[0..q−1], A[0..p+q−1])', rows: [
-            ['i ← 0; j ← 0; k ← 0', 'İki dizinin başlarına işaretçi'],
-            ['while i < p and j < q do\n    if B[i] ≤ C[j]\n        A[k] ← B[i]; i ← i + 1\n    else A[k] ← C[j]; j ← j + 1\n    k ← k + 1', '<b>Temel işlem: B[i] ≤ C[j]</b>. Küçük olan A\'ya yazılır. ≤ kullanıldığı için eşitlerde B\'den (soldan) alınır → <b>kararlı</b>'],
-            ['if i = p  copy C[j..q−1] to A[k..p+q−1]\nelse      copy B[i..p−1] to A[k..p+q−1]', 'Bir dizi boşalınca kalanlar karşılaştırmasız kopyalanır']
+          { t: 'h', text: 'İki yorum, iki cevap' },
+          { t: 'p', html: 'Ödev metni "tur" diyor ama dönüşten söz etmiyor. İki yorumun ikisini de raporda göstermek güvenli olur:' },
+          { t: 'table', head: ['Yorum', 'Geçerli sıralama', 'En kısa', 'Uzunluk'], rows: [
+            ['<b>Yol</b>: 4 şehir, 3 yol, başlangıca dönmeden', '62', 'B → F → E → C (ya da tersi)', '1 + 2 + 3 = <b>6</b>'],
+            ['<b>Tur</b>: 4 şehir, 4 yol, başlangıca dönerek', '24 (6 farklı devre)', 'B → F → E → C → B', '1 + 2 + 3 + 5 = <b>11</b>']
           ] },
-          { t: 'dg', id: 'merge-tree' },
-          { t: 'h', text: 'Analiz' },
-          { t: 'p', html: 'n\'i 2\'nin kuvveti kabul ederek karşılaştırma sayısı:' },
-          { t: 'code', text: 'C(n) = 2C(n/2) + C_merge(n),   C(1) = 0\n\nC_merge(n): her adımda bir karşılaştırma yapılır ve bir eleman yerleşir.\n  En kötü durum: iki dizi de son karşılaştırmaya kadar boşalmaz → C_merge(n) = n − 1\n\nC_worst(n) = 2C_worst(n/2) + n − 1  →  Master (a=2, b=2, d=1, a = bᵈ): Θ(n log n)\nTam çözüm: C_worst(n) = n·log₂n − n + 1' },
-          { t: 'note', kind: 'exam', html: 'Merge sort\'un en iyi, ortalama ve en kötü durumu <b>Θ(n log n)</b>\'dir. Bedeli: <b>yerinde değildir</b>, B ve C için n kadar <b>ek bellek</b> ister. Kararlıdır.' }
+          { t: 'note', kind: 'exam', html: 'Kontrol için: 6 şehrin tamamını dolaşan Hamilton devresi bu grafta yalnızca bir tanedir: A → B → C → D → E → F → A = 9 + 5 + 8 + 7 + 2 + 4 = <b>35</b>. Laboratuvarın <b>Gezgin Satıcı</b> modülü bu üç senaryoyu da çalıştırır, her sıralamayı tek tek gösterir.' }
         ],
         checks: [
-          { q: '8, 3, 2, 9, 7, 1, 5, 4 dizisinin merge sort bölünme ve birleşme adımlarını yazın.', a: 'Böl: [8 3 2 9] [7 1 5 4] → [8 3] [2 9] [7 1] [5 4] → tek elemanlar. Birleştir: [3 8] [2 9] [1 7] [4 5] → [2 3 8 9] [1 4 5 7] → [1 2 3 4 5 7 8 9].' },
-          { q: 'Merge sort için özyineleme ilişkisini kurun ve Master teoremiyle çözün.', a: 'C(n) = 2C(n/2) + (n−1), C(1) = 0. a=2, b=2, d=1, a = bᵈ → Θ(n log n). Tam: n log₂n − n + 1.' },
-          { q: 'Birleştirme adımında en kötü durum ne zaman oluşur?', a: 'İki dizinin de son karşılaştırmaya kadar boşalmaması, yani elemanların sırayla iki diziden dönüşümlü gelmesi: n−1 karşılaştırma.' }
-        ]
-      },
-      {
-        id: 'quick',
-        title: 'Hızlı Sıralama (Quick Sort)',
-        en: 'Divide and conquer: quicksort',
-        src: 'Böl Fethet s. 11–18',
-        minutes: 12,
-        lab: LAB('quick'),
-        blocks: [
-          { t: 'h', text: 'Merge sort\'tan farkı' },
-          { t: 'p', html: 'Diziyi alt dizilere <b>konumlarına göre değil, değerlerine göre</b> böler. Bir <b>pivot</b> (mihenk) seçilir; dizi, pivotun solunda ondan <b>küçük/eşit</b>, sağında <b>büyük/eşit</b> elemanlar kalacak şekilde düzenlenir. Pivot böylece <b>son yerine</b> oturur; sol ve sağ parçalar özyinelemeli sıralanır. Birleştirme adımı yoktur.' },
-          { t: 'code', text: 'A[0] … A[s−1]   A[s]   A[s+1] … A[n−1]\n  hepsi ≤ A[s]  pivot    hepsi ≥ A[s]' },
-          { t: 'codex', title: 'Quicksort(A[l..r])', rows: [
-            ['if l < r', ''],
-            ['    s ← Partition(A[l..r])', 's: ayırma (split) noktası, pivotun son yeri'],
-            ['    Quicksort(A[l..s−1])\n    Quicksort(A[s+1..r])', '']
-          ] },
-          { t: 'codex', title: 'HoarePartition(A[l..r])', rows: [
-            ['p ← A[l]', 'Pivot: ilk eleman'],
-            ['i ← l;  j ← r + 1', ''],
-            ['repeat\n  repeat i ← i + 1\n  until A[i] ≥ p\n  repeat j ← j − 1\n  until A[j] ≤ p\n  swap(A[i], A[j])\nuntil i ≥ j','i soldan p\'den <b>büyük/eşit</b>, j sağdan <b>küçük/eşit</b> eleman arar; ikisi de durunca yer değiştirirler'],
-            ['swap(A[i], A[j])', 'i ≥ j olunca yapılan son (fazla) değişimi geri al'],
-            ['swap(A[l], A[j])\nreturn j', 'Pivot j\'ye yerleşir']
-          ] },
-          { t: 'dg', id: 'sort-quick' },
-          { t: 'note', kind: 'info', html: 'Slayt 13–14\'teki tablolu örnek pivotu <b>ortadaki</b> elemandan (indis (l+r)/2) seçer; sözde kod ise <b>ilk</b> elemanı alır. Fikir aynıdır: pivot seçimi yalnızca hangi bölünmelerin oluşacağını değiştirir.' },
-          { t: 'h', text: 'Analiz' },
-          { t: 'table', head: ['Durum', 'Ne olur?', 'Karşılaştırma'], rows: [
-            ['En iyi', 'Tüm bölmeler <b>tam ortadan</b>', 'C_best(n) = 2C_best(n/2) + n, C_best(1) = 0 → <b>n log₂n</b>, Θ(n log n)'],
-            ['En kötü', 'Tüm bölmeler <b>uçta</b>: bir alt dizi boş, geri kalan her şey diğerinde. Ör. zaten <b>sıralı</b> dizi + ilk eleman pivot', 'C_worst(n) = (n+1) + n + … + 3 = (n+1)(n+2)/2 − 3 ∈ <b>Θ(n²)</b>'],
-            ['Ortalama', 'Rastgele dizi, ayırma noktası her yerde eşit olasılıkla', 'C_avg(n) ≈ 1,39·n log₂n ∈ <b>Θ(n log n)</b>']
-          ] },
-          { t: 'note', kind: 'exam', html: 'Quick sort\'un tuzağı: en kötü durum <b>Θ(n²)</b> ve bu durum <b>sıralı dizide</b> (ilk eleman pivotken) ortaya çıkar. Pratikte ortalama durumu çok iyi olduğundan genellikle en hızlı sıralamadır. Yerindedir (yalnızca özyineleme yığını), <b>kararlı değildir</b>.' }
-        ],
-        checks: [
-          { q: 'Quick sort ile merge sort\'un bölme biçimi arasındaki fark nedir?', a: 'Merge sort diziyi konumlarına göre (ortadan) böler ve birleştirme adımında iş yapar. Quick sort değerlerine göre (pivottan küçük/büyük) böler; iş bölümleme adımındadır, birleştirme gerekmez.' },
-          { q: 'Quick sort\'un en kötü durumu hangi girdide oluşur ve karşılaştırma sayısı nedir?', a: 'Bölümlemeler hep uçta kaldığında, ör. ilk eleman pivot seçilirken zaten sıralı dizide. C_worst(n) = (n+1)(n+2)/2 − 3 ∈ Θ(n²).' },
-          { q: 'Quick sort\'un en iyi durum özyinelemesi ve çözümü?', a: 'C_best(n) = 2C_best(n/2) + n, C_best(1) = 0 → n log₂n ∈ Θ(n log n).' }
-        ]
-      },
-      {
-        id: 'karsilastirma',
-        title: 'Beş Algoritmanın Karşılaştırması',
-        en: 'Comparison and Lab 1',
-        src: 'Böl Fethet s. 15 · Lab Uygulaması 1',
-        minutes: 8,
-        lab: { preset: { module: 'sorting', tab: 'bench' } },
-        blocks: [
-          { t: 'h', text: 'Karşılaştırma tablosu (düzeltilmiş)' },
-          { t: 'table', head: ['Algoritma', 'Teknik', 'En iyi', 'Ortalama', 'En kötü', 'Yerinde', 'Kararlı'], rows: [
-            ['Insertion', 'Azalt-fethet', 'Θ(n)', 'Θ(n²)', 'Θ(n²)', '✓', '✓'],
-            ['Selection', 'Kaba kuvvet', 'Θ(n²)', 'Θ(n²)', 'Θ(n²)', '✓', '✗'],
-            ['Bubble', 'Kaba kuvvet', 'Θ(n²)*', 'Θ(n²)', 'Θ(n²)', '✓', '✓'],
-            ['Merge', 'Böl-fethet', 'Θ(n log n)', 'Θ(n log n)', '<b>Θ(n log n)</b>', '✗ (n ek bellek)', '✓'],
-            ['Quick', 'Böl-fethet', 'Θ(n log n)', 'Θ(n log n)', '<b>Θ(n²)</b>', '✓', '✗']
-          ] },
-          { t: 'p', html: '* Bayraklı (erken çıkışlı) bubble sort için en iyi durum Θ(n).' },
-          { t: 'note', kind: 'warn', html: '<b>Slayt 15\'teki tabloda hata var:</b> Birleştirmeli sıralama için en kötü durum <b>O(n²)</b>, çabuk sıralama için <b>O(n log n)</b> yazılmış. İkisi <b>yer değiştirmiş</b>: merge sort\'un en kötü durumu O(n log n), quick sort\'unki O(n²)\'dir. Aynı slaytların s. 7 ve s. 18\'i de bunu gösterir.' },
-          { t: 'h', text: 'Lab 1: ne isteniyor?' },
-          { t: 'list', items: [
-            'Beş algoritmayı gerçekleştir: Insertion, Selection, Bubble, Merge, Quick.',
-            'Rastgele tamsayılarla <b>10, 100, 1.000, 10.000, 100.000, 1.000.000</b> elemanlı diziler oluştur.',
-            'Her testi <b>en az 5 kez</b> tekrarla, <b>ortalama</b> süreyi <b>ms</b> cinsinden kaydet.',
-            'O(n²) algoritmalar büyük dizilerde çok uzun sürer: <b>makul süre sınırını aşan testleri durdur</b> ve raporda belirt.',
-            'Teslim: kaynak kodlar + karşılaştırma tablosu.'
-          ] },
-          { t: 'note', kind: 'exam', html: 'Beklenen gözlem: n 10 katına çıkınca O(n²) algoritmaların süresi yaklaşık <b>100 katına</b>, O(n log n) algoritmalarınki yaklaşık <b>10–13 katına</b> çıkar. 1.000.000 elemanda O(n²) algoritmalar saatler sürer (≈10¹² karşılaştırma), merge/quick ise birkaç yüz milisaniyede biter. Laboratuvardaki <b>Süre ölçümü</b> sekmesi bu deneyi tarayıcıda yapar.' }
-        ],
-        checks: [
-          { q: 'Hangi sıralama algoritmalarının en kötü durumu Θ(n log n)\'dir?', a: 'Beş algoritma içinde yalnızca merge sort. Quick sort\'un en kötü durumu Θ(n²)\'dir.' },
-          { q: 'Beş algoritmadan hangileri kararlı, hangileri yerindedir?', a: 'Kararlı: insertion, bubble, merge. Yerinde: insertion, selection, bubble, quick (merge sort n ek bellek ister).' },
-          { q: 'Dizi neredeyse sıralıysa hangi algoritmayı seçersiniz? Hangisinden kaçınırsınız?', a: 'Insertion sort (en iyi duruma yakın, ~Θ(n)). İlk elemanı pivot alan quick sort\'tan kaçınılır; en kötü duruma (Θ(n²)) düşer.' }
+          { q: '6 şehirden 4 şehirlik sıralı seçim sayısı kaçtır?', a: '6·5·4·3 = 360 (P(6,4)).' },
+          { q: 'Lab 2 grafında başlangıca dönmeden 4 şehirlik en kısa yol hangisidir?', a: 'B → F → E → C: 1 + 2 + 3 = 6 (ters yönü C → E → F → B de aynı).' },
+          { q: 'Kaba kuvvet çözümünde kenarı olmayan şehir çiftleri nasıl ele alınır?', a: 'O sıralama geçersiz sayılır ve maliyeti hesaplanmadan elenir (ya da mesafe ∞ kabul edilir).' }
         ]
       }
     ]

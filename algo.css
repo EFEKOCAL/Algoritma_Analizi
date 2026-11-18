@@ -260,3 +260,60 @@
   .ax-code { font-size: 11.5px; }
   .dg-ctrl .btn { padding-inline: 10px; }
 }
+
+/* ------------------------------------------------ Kaba Kuvvet / Azalt-Fethet şekilleri */
+.gy-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 150px; gap: 12px; align-items: start; }
+.gy-e { stroke: var(--border-strong); stroke-width: 2; }
+.gy-e.tree { stroke: var(--ok); stroke-width: 3.5; }
+.gy-e.back { stroke: var(--warn); stroke-width: 2; stroke-dasharray: 6 5; }
+.gy-head { fill: var(--muted); }
+.gy-n circle { fill: var(--panel-2); stroke: var(--border-strong); stroke-width: 2; transition: all .2s; }
+.gy-n text { font: 700 12px var(--sans); fill: var(--text); text-anchor: middle; }
+.gy-n .gy-lbl { font: 700 10px var(--mono); fill: var(--warn); text-anchor: start; }
+.gy-n.vis circle { stroke: var(--accent); fill: rgba(56, 189, 248, .15); }
+.gy-n.cur circle { stroke: var(--warn); fill: rgba(251, 191, 36, .3); }
+.gy-n.done circle { stroke: var(--ok); fill: rgba(52, 211, 153, .18); }
+.gy-n.gone { opacity: .18; }
+.gy-box { padding: 8px; border-radius: 9px; border: 1px solid var(--border); background: var(--bg); }
+.gy-box > b { display: block; margin-bottom: 6px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.gy-box > div { display: flex; flex-wrap: wrap; gap: 4px; }
+.gy-box span { padding: 3px 7px; border-radius: 6px; border: 1px solid var(--border-strong); background: var(--panel); font: 700 12.5px var(--mono); }
+.gy-box sub { font-size: 9px; color: var(--warn); }
+.gy-box em { font-size: 12px; color: var(--faint); }
+
+.sm-grid { display: grid; grid-template-columns: repeat(var(--n), minmax(14px, 26px)); justify-content: center; gap: 3px; overflow-x: auto; }
+.sm-grid span { display: grid; place-items: center; height: 26px; border-radius: 5px; font: 700 13px var(--mono); }
+.sm-t { background: var(--panel); border: 1px solid var(--border-strong); }
+.sm-p { border: 1px solid var(--border-strong); }
+.sm-p.ok { background: rgba(52, 211, 153, .2); border-color: var(--ok); }
+.sm-p.bad { background: rgba(248, 113, 113, .25); border-color: var(--danger); }
+.sm-p.idle { opacity: .45; }
+
+.cv-hull { stroke: var(--ok); stroke-width: 3; }
+.cv-try { stroke-width: 2.5; stroke-dasharray: 6 4; }
+.cv-try.ok { stroke: var(--ok); }
+.cv-try.bad { stroke: var(--danger); }
+
+.ks-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; align-content: start; }
+.ks-item { display: grid; gap: 2px; padding: 10px; border-radius: 9px; border: 1px solid var(--border-strong); background: var(--panel); font: 12.5px var(--mono); }
+.ks-item b { font-family: var(--sans); }
+.ks-bag { border-color: var(--warn); }
+.as-m td { text-align: center; font-family: var(--mono); }
+.as-m td.as-on { background: rgba(52, 211, 153, .22); color: var(--ok); font-weight: 700; }
+.pt-best { color: var(--ok); font-weight: 700; }
+
+.jt-row { display: flex; justify-content: center; gap: 10px; }
+.jt-c { display: grid; justify-items: center; min-width: 46px; padding: 6px 10px 8px; border-radius: 9px; border: 1px solid var(--border-strong); background: var(--panel); font: 700 20px var(--mono); }
+.jt-c i { font-style: normal; font-size: 15px; color: var(--accent); }
+.jt-c.on { border-color: var(--warn); background: rgba(251, 191, 36, .18); }
+.jt-list { margin: 12px 0 0; text-align: center; font: 13px var(--mono); color: var(--muted); word-spacing: 6px; }
+.sb-t td, .sb-t th { text-align: center; font-family: var(--mono); }
+
+.fc-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.fc { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; border: 2px solid #b8923a; background: rgba(251, 191, 36, .2); font: 700 12px var(--mono); }
+.fc.l { border-color: var(--accent); background: rgba(56, 189, 248, .25); }
+.fc.r { border-color: var(--m-pivot); background: rgba(244, 114, 182, .25); }
+.fc.o { border-style: dashed; }
+.fc.x { opacity: .2; }
+.ru-t td { font-family: var(--mono); }
+@media (max-width: 700px) { .gy-wrap { grid-template-columns: minmax(0, 1fr); } }

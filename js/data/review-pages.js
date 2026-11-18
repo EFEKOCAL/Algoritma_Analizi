@@ -43,17 +43,36 @@
       { l: 'ch5/limit', secs: ['Neden limit?', 'İki araç', 'Çözümlü örnekler (slayt 74–76)'] },
       { l: 'ch5/limit', secs: ['Alıştırma çözümleri (slayt 59, 78–82)'] },
 
-      { l: 'ch6/merge', secs: ['Algoritma'] },
-      { l: 'ch6/merge', secs: ['Analiz'] },
+      { l: 'ch8/merge', secs: ['Algoritma'] },
+      { l: 'ch8/merge', secs: ['Analiz'] },
 
-      { l: 'ch6/quick', secs: ['Merge sort\'tan farkı'] },
-      { l: 'ch6/quick', secs: ['Analiz'] },
+      { l: 'ch8/quick', secs: ['Merge sort\'tan farkı'] },
+      { l: 'ch8/quick', secs: ['Analiz'] },
 
-      { l: 'ch7/etrafli', secs: ['Etraflı arama', 'Gezgin satıcı problemi'] },
-      { l: 'ch7/etrafli', secs: ['Kaç tur denenir?'] },
+      { l: 'ch6/arama-string', secs: ['Alıştırma: bu algoritmalar ne yapıyor?'] },
+      { l: 'ch6/arama-string', secs: ['Sıralı arama (gözcülü)', 'Kaba kuvvet string eşleme'] },
 
-      { l: 'ch7/lab2', secs: ['Problem', 'Kaba kuvvet tasarımı'] },
-      { l: 'ch7/lab2', secs: ['İki yorum, iki cevap'] }
+      { l: 'ch6/etrafli', secs: ['Etraflı arama', 'Gezgin satıcı problemi'] },
+      { l: 'ch6/etrafli', secs: ['Sırt çantası problemi'] },
+      { l: 'ch6/etrafli', secs: ['İşe alma (atama) problemi'] },
+
+      { l: 'ch6/dfs', secs: ['Graf gezme', 'DFS nasıl çalışır?'] },
+      { l: 'ch6/dfs', secs: ['DFS ormanı ve kenar türleri', 'Etkinlik ve kullanım'] },
+
+      { l: 'ch6/bfs', secs: ['BFS nasıl çalışır?'] },
+      { l: 'ch6/bfs', secs: ['BFS ormanı', 'Etkinlik ve DFS\'den farkları'] },
+
+      { l: 'ch7/topolojik', secs: ['Problem', 'Yönlü grafta DFS kenarları'] },
+      { l: 'ch7/topolojik', secs: ['Örnek: ders sırası'] },
+
+      { l: 'ch7/permutasyon', secs: ['Asgari değişiklik ile permütasyon', 'Johnson–Trotter algoritması'] },
+      { l: 'ch7/permutasyon', secs: ['Alt küme üretme'] },
+
+      { l: 'ch7/lab-af', secs: ['Sahte para problemi'] },
+      { l: 'ch7/lab-af', secs: ['Rus köylüsü çarpımı'] },
+
+      { l: 'ch6/lab2', secs: ['Problem', 'Kaba kuvvet tasarımı'] },
+      { l: 'ch6/lab2', secs: ['İki yorum, iki cevap'] }
     ]
   };
 })(window.OSLab = window.OSLab || {});
