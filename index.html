@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Algoritma Analizi dersi için vize odaklı ders notları ve interaktif laboratuvar">
+  <title>Algoritma Analizi Lab</title>
+  <link rel="stylesheet" href="style.css?v=20261118a">
+  <link rel="stylesheet" href="algo.css?v=20261118a">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="Modüller">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <path d="M3 21h18"/><rect x="4.5" y="13" width="3" height="6" rx="0.6"/><rect x="10.5" y="9" width="3" height="10" rx="0.6"/><rect x="16.5" y="4" width="3" height="15" rx="0.6"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">Algoritma Analizi Lab</div>
+          <div class="brand-sub">Algoritma Analizi ve Tasarımı</div>
+        </div>
+      </div>
+
+      <div class="nav-label">1 · Ders (önce teori)</div>
+      <nav class="nav">
+        <a class="nav-item" href="#/learn" data-route="learn">
+          <span class="nav-num">★</span>
+          <span class="nav-text"><span class="nav-title">Başlangıç</span><span class="nav-sub">Kaldığın yerden devam et</span></span>
+        </a>
+        <a class="nav-item" href="#/learn/hizli" data-route="learn">
+          <span class="nav-num">↻</span>
+          <span class="nav-text"><span class="nav-title">Hızlı Tekrar</span><span class="nav-sub">Konu konu, tek sayfada</span></span>
+          <span class="badge badge-live">Vize</span>
+        </a>
+        <a class="nav-item" href="#/learn/harita" data-route="learn">
+          <span class="nav-num">◎</span>
+          <span class="nav-text"><span class="nav-title">Zihin Haritası</span><span class="nav-sub">Konuların birbiriyle ilgisi</span></span>
+        </a>
+        <a class="nav-item" href="#/learn/plan" data-route="learn">
+          <span class="nav-num">≡</span>
+          <span class="nav-text"><span class="nav-title">Genel Bakış</span><span class="nav-sub">Çalışma yöntemi, vize planı</span></span>
+        </a>
+        <a class="nav-item" href="#/learn/ch1" data-route="learn">
+          <span class="nav-num">H1</span>
+          <span class="nav-text"><span class="nav-title">Algoritma ve Temel Kavramlar</span><span class="nav-sub">EBOB, Eratosthenes, tasarım süreci</span></span>
+        </a>
+        <a class="nav-item" href="#/learn/ch2" data-route="learn">
+          <span class="nav-num">H2</span>
+          <span class="nav-text"><span class="nav-title">Problem Türleri</span><span class="nav-sub">Sıralama, arama, graf, geometri</span></span>
+        </a>
+        <a class="nav-item" href="#/learn/ch3" data-route="learn">
+          <span class="nav-num">H3</span>
+          <span class="nav-text"><span class="nav-title">Etkinlik ve Analiz</span><span class="nav-sub">Temel işlem, T(N), döngü, özyineleme</span></span>
+        </a>
+        <a class="nav-item" href="#/learn/ch4" data-route="learn">
+          <span class="nav-num">H4</span>
+          <span class="nav-text"><span class="nav-title">Durum Değerlendirmeleri</span><span class="nav-sub">En iyi, en kötü, ortalama</span></span>
+        </a>
+        <a class="nav-item" href="#/learn/ch5" data-route="learn">
+          <span class="nav-num">H5</span>
+          <span class="nav-text"><span class="nav-title">Asimptotik Yaklaşımlar</span><span class="nav-sub">O, Ω, Θ, limit yöntemi</span></span>
+        </a>
+        <a class="nav-item" href="#/learn/ch6" data-route="learn">
+          <span class="nav-num">H6</span>
+          <span class="nav-text"><span class="nav-title">Sıralama Algoritmaları</span><span class="nav-sub">Insertion, Selection, Bubble, Merge, Quick</span></span>
+        </a>
+        <a class="nav-item" href="#/learn/ch7" data-route="learn">
+          <span class="nav-num">H7</span>
+          <span class="nav-text"><span class="nav-title">Kaba Kuvvet ve Gezgin Satıcı</span><span class="nav-sub">Etraflı arama, TSP</span></span>
+        </a>
+        <a class="nav-item" href="#/learn/sorular" data-route="learn">
+          <span class="nav-num">?</span>
+          <span class="nav-text"><span class="nav-title">Hocanın Soruları</span><span class="nav-sub">Slayt alıştırmaları, aralıklı tekrar</span></span>
+          <span class="badge badge-live">Sınav</span>
+        </a>
+      </nav>
+
+      <div class="nav-label nav-label-2">2 · Laboratuvar (pratik)</div>
+      <nav class="nav">
+        <a class="nav-item" href="#/sorting" data-route="sorting">
+          <span class="nav-num">L1</span>
+          <span class="nav-text"><span class="nav-title">Sıralama Laboratuvarı</span><span class="nav-sub">Adım adım izle, süre ölç</span></span>
+          <span class="badge badge-live">Lab 1</span>
+        </a>
+        <a class="nav-item" href="#/growth" data-route="growth">
+          <span class="nav-num">L2</span>
+          <span class="nav-text"><span class="nav-title">Büyüme Derecesi</span><span class="nav-sub">Döngü sayacı, O–Ω–Θ, limit</span></span>
+        </a>
+        <a class="nav-item" href="#/tsp" data-route="tsp">
+          <span class="nav-num">L3</span>
+          <span class="nav-text"><span class="nav-title">Gezgin Satıcı</span><span class="nav-sub">Kaba kuvvetle en kısa tur</span></span>
+          <span class="badge badge-live">Lab 2</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div><kbd>I</kbd> Bilgi &amp; Sınav paneli</div>
+        <div><kbd>Esc</kbd> Paneli kapat</div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-label="Menüyü aç" aria-controls="sidebar" aria-expanded="false">☰</button>
+        <div class="crumbs">
+          <span class="crumb-num" id="page-num">T</span>
+          <h1 id="page-title">Ders Notları</h1>
+          <span class="page-sub" id="page-sub"></span>
+        </div>
+        <span class="status" id="status"><i class="led"></i><span id="status-text">STANDBY</span></span>
+      </header>
+      <main class="content" id="view"></main>
+    </div>
+  </div>
+
+  <div class="scrim" id="scrim"></div>
+
+  <button class="info-fab" id="info-fab" type="button" aria-expanded="false" aria-controls="info-panel">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M9 8h7M9 12h5"/>
+    </svg>
+    Bilgi &amp; Sınav
+  </button>
+
+  <aside class="info-panel" id="info-panel" aria-hidden="true" aria-label="Bilgi ve Sınav Paneli">
+    <header class="info-head">
+      <div>
+        <div class="info-title">Bilgi &amp; Sınav Paneli</div>
+        <div class="info-module" id="info-module"></div>
+      </div>
+      <button class="icon-btn info-close" type="button" aria-label="Paneli kapat">×</button>
+    </header>
+    <div class="info-tabs" role="tablist">
+      <button class="info-tab" type="button" role="tab" data-tab="theory">Teori</button>
+      <button class="info-tab" type="button" role="tab" data-tab="exam">Sınav Soruları <span class="count" id="exam-count">0</span></button>
+    </div>
+    <div class="info-pane" id="info-theory" role="tabpanel"></div>
+    <div class="info-pane" id="info-exam" role="tabpanel" hidden></div>
+  </aside>
+
+  <script src="js/data/info-content.js?v=20261118a" defer></script>
+  <script src="js/data/lessons-ch1.js?v=20261118a" defer></script>
+  <script src="js/data/lessons-ch2.js?v=20261118a" defer></script>
+  <script src="js/data/lessons-ch3.js?v=20261118a" defer></script>
+  <script src="js/data/lessons-ch4.js?v=20261118a" defer></script>
+  <script src="js/data/lessons-ch5.js?v=20261118a" defer></script>
+  <script src="js/data/lessons-ch6.js?v=20261118a" defer></script>
+  <script src="js/data/lessons-ch7.js?v=20261118a" defer></script>
+  <script src="js/data/teacher-questions.js?v=20261118a" defer></script>
+  <script src="js/data/chapter-outlines.js?v=20261118a" defer></script>
+  <script src="js/data/exam-scope.js?v=20261118a" defer></script>
+  <script src="js/data/review-pages.js?v=20261118a" defer></script>
+  <script src="js/data/mind-links.js?v=20261118a" defer></script>
+  <script src="js/algos.js?v=20261118a" defer></script>
+  <script src="js/views/diagrams.js?v=20261118a" defer></script>
+  <script src="js/views/diagrams-algo.js?v=20261118a" defer></script>
+  <script src="js/views/learn-view.js?v=20261118a" defer></script>
+  <script src="js/views/review-view.js?v=20261118a" defer></script>
+  <script src="js/views/mindmap-view.js?v=20261118a" defer></script>
+  <script src="js/views/sorting-view.js?v=20261118a" defer></script>
+  <script src="js/views/growth-view.js?v=20261118a" defer></script>
+  <script src="js/views/tsp-view.js?v=20261118a" defer></script>
+  <script src="js/app.js?v=20261118a" defer></script>
+</body>
+</html>
